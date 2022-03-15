@@ -117,7 +117,7 @@ public class BittrexTradeServiceRaw extends BittrexBaseService {
                     contentCreator,
                     signatureCreator,
                     BittrexUtils.toPairString(currencyPair),
-                    200,
+                    5,
                     start,
                     end))
         .withRetry(retry("getClosedOrders"))

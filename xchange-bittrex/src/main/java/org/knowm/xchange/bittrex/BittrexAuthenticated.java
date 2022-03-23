@@ -162,8 +162,8 @@ public interface BittrexAuthenticated extends Bittrex {
       @HeaderParam("Api-Signature") ParamsDigest signature,
       @QueryParam("marketSymbol") String marketSymbol,
       @QueryParam("pageSize") Integer pageSize,
-      @QueryParam("startDate") Date startDate,
-      @QueryParam("endDate") Date endDate)
+      @QueryParam("nextPageToken") String nextPageToken,
+      @QueryParam("previousPageToken") String previousPageToken)
       throws IOException, BittrexException;
 
   @GET

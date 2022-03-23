@@ -108,7 +108,7 @@ public class BittrexTradeServiceRaw extends BittrexBaseService {
   }
 
   public List<BittrexOrder> getBittrexUserTradeHistory(
-      CurrencyPair currencyPair, Date start, Date end) throws IOException {
+      CurrencyPair currencyPair, String start, String end) throws IOException {
     return decorateApiCall(
             () ->
                 bittrexAuthenticated.getClosedOrders(
@@ -117,7 +117,7 @@ public class BittrexTradeServiceRaw extends BittrexBaseService {
                     contentCreator,
                     signatureCreator,
                     BittrexUtils.toPairString(currencyPair),
-                    10,
+                    20,
                     start,
                     end))
         .withRetry(retry("getClosedOrders"))

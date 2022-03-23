@@ -22,11 +22,7 @@ import org.knowm.xchange.dto.trade.MarketOrder;
 import org.knowm.xchange.dto.trade.OpenOrders;
 import org.knowm.xchange.dto.trade.UserTrades;
 import org.knowm.xchange.service.trade.TradeService;
-import org.knowm.xchange.service.trade.params.CancelOrderByIdParams;
-import org.knowm.xchange.service.trade.params.CancelOrderParams;
-import org.knowm.xchange.service.trade.params.TradeHistoryParamCurrencyPair;
-import org.knowm.xchange.service.trade.params.TradeHistoryParams;
-import org.knowm.xchange.service.trade.params.TradeHistoryParamsTimeSpan;
+import org.knowm.xchange.service.trade.params.*;
 import org.knowm.xchange.service.trade.params.orders.DefaultOpenOrdersParamCurrencyPair;
 import org.knowm.xchange.service.trade.params.orders.OpenOrdersParams;
 import org.knowm.xchange.service.trade.params.orders.OrderQueryParams;
@@ -98,26 +94,20 @@ public class BittrexTradeService extends BittrexTradeServiceRaw implements Trade
   public UserTrades getTradeHistory(TradeHistoryParams params) throws IOException {
 
     CurrencyPair currencyPair = null;
-    Date startDate = null;
-    Date endDate = null;
+    String startId = null;
+    String endId = null;
 
     if (params instanceof TradeHistoryParamCurrencyPair) {
       currencyPair = ((TradeHistoryParamCurrencyPair) params).getCurrencyPair();
     }
-    if (params instanceof TradeHistoryParamsTimeSpan) {
-      Date start = ((TradeHistoryParamsTimeSpan) params).getStartTime();
-      if (start != null) {
-        startDate = Date.from(start.toInstant().truncatedTo(ChronoUnit.SECONDS));
-      }
-      Date end = ((TradeHistoryParamsTimeSpan) params).getEndTime();
-      if (end != null) {
-        endDate = Date.from(end.toInstant().truncatedTo(ChronoUnit.SECONDS));
-      }
+    if (params instanceof TradeHistoryParamsIdSpan) {
+      startId = ((TradeHistoryParamsIdSpan) params).getStartId();
+      endId = ((TradeHistoryParamsIdSpan) params).getEndId();
     }
 
     try {
       List<BittrexOrder> tradeHistory =
-          getBittrexUserTradeHistory(currencyPair, startDate, endDate);
+          getBittrexUserTradeHistory(currencyPair, startId, endId);
       return new UserTrades(
           BittrexAdapters.adaptUserTrades(tradeHistory), Trades.TradeSortType.SortByTimestamp);
     } catch (BittrexException e) {

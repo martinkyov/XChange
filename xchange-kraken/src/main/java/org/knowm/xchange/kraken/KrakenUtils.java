@@ -24,6 +24,7 @@ public class KrakenUtils {
 
   /** https://support.kraken.com/hc/en-us/articles/360001185506-How-to-interpret-asset-codes */
   private static Map<String, String> discontinuedCurrencies;
+  private static Map<String, String> holdCurrencies;
 
   static {
     discontinuedCurrencies = new HashMap<>();
@@ -33,6 +34,12 @@ public class KrakenUtils {
     discontinuedCurrencies.put("XNMC", "NMC");
     discontinuedCurrencies.put("XXVN", "XVN");
     discontinuedCurrencies.put("ZKRW", "KRW");
+  }
+
+  static {
+    holdCurrencies = new HashMap<>();
+    holdCurrencies.put("USD.HOLD", "USD");
+    holdCurrencies.put("EUR.HOLD", "EUR");
   }
 
   /** Private Constructor */
@@ -107,6 +114,9 @@ public class KrakenUtils {
   public static Currency translateKrakenCurrencyCode(String currencyIn) {
     if (discontinuedCurrencies.containsKey(currencyIn)) {
       return Currency.getInstance(discontinuedCurrencies.get(currencyIn));
+    }
+    if (holdCurrencies.containsKey(currencyIn)) {
+      return Currency.getInstance(holdCurrencies.get(currencyIn));
     }
     Currency currencyOut = assetsMap.get(currencyIn);
     if (currencyOut == null) {

@@ -116,7 +116,8 @@ public class KrakenUtils {
       return Currency.getInstance(discontinuedCurrencies.get(currencyIn));
     }
     if (holdCurrencies.containsKey(currencyIn)) {
-      return Currency.getInstance(holdCurrencies.get(currencyIn));
+      String currencyCode = holdCurrencies.get(currencyIn);
+      return Currency.getInstance(currencyCode);
     }
     Currency currencyOut = assetsMap.get(currencyIn);
     if (currencyOut == null) {

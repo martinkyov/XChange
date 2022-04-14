@@ -102,7 +102,7 @@ public class BinanceAccountServiceRaw extends BinanceBaseService {
 
   public List<BinanceDeposit> depositHistory(String asset, Long startTime, Long endTime)
       throws BinanceException, IOException {
-    SynchronizedValueFactory<Long> timestamp = getTimestampFactory();
+    long timestamp = 1;
     return decorateApiCall(
             () ->
                 binance.depositHistory(

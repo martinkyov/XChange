@@ -22,6 +22,7 @@ import org.knowm.xchange.binance.dto.account.TransferSubUserHistory;
 import org.knowm.xchange.binance.dto.account.WithdrawResponse;
 import org.knowm.xchange.client.ResilienceRegistries;
 import org.knowm.xchange.currency.Currency;
+import si.mazi.rescu.SynchronizedValueFactory;
 
 public class BinanceAccountServiceRaw extends BinanceBaseService {
 
@@ -101,6 +102,7 @@ public class BinanceAccountServiceRaw extends BinanceBaseService {
 
   public List<BinanceDeposit> depositHistory(String asset, Long startTime, Long endTime)
       throws BinanceException, IOException {
+    SynchronizedValueFactory<Long> timestamp = getTimestampFactory();
     return decorateApiCall(
             () ->
                 binance.depositHistory(
@@ -108,7 +110,7 @@ public class BinanceAccountServiceRaw extends BinanceBaseService {
                     startTime,
                     endTime,
                     getRecvWindow(),
-                    getTimestampFactory(),
+                    timestamp,
                     apiKey,
                     signatureCreator))
         .withRetry(retry("depositHistory"))

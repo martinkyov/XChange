@@ -179,7 +179,7 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
       if (coinmateTransactionHistory.getData().size() < limit) {
         break;
       }
-      timestampFrom = coinmateTransactionHistory.getData().get(limit).getTimestamp();
+      timestampFrom = coinmateTransactionHistory.getData().get(limit - 1).getTimestamp();
     }
     return allRecords;
   }

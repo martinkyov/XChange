@@ -25,6 +25,9 @@ package org.knowm.xchange.coinmate.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.coinmate.CoinmateAdapters;
@@ -156,18 +159,29 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
         timestampTo = thpts.getEndTime().getTime();
       }
     }
-    CoinmateTransferHistory coinmateTransferHistory =
-            getTransfersData(limit, timestampFrom, timestampTo);
+    List<FundingRecord> allRecords = new ArrayList<>();
 
-    CoinmateTransactionHistory coinmateTransactionHistory =
-        getCoinmateTransactionHistory(
-            offset,
-            limit,
-            CoinmateAdapters.adaptSortOrder(order),
-            timestampFrom,
-            timestampTo,
-            null);
-    return CoinmateAdapters.adaptFundingHistory(coinmateTransactionHistory, coinmateTransferHistory);
+    while (true) {
+      CoinmateTransferHistory coinmateTransferHistory =
+              getTransfersData(limit, timestampFrom, timestampTo);
+
+      CoinmateTransactionHistory coinmateTransactionHistory =
+              getCoinmateTransactionHistory(
+                      offset,
+                      limit,
+                      CoinmateAdapters.adaptSortOrder(order),
+                      timestampFrom,
+                      timestampTo,
+                      null);
+
+      List<FundingRecord> records = CoinmateAdapters.adaptFundingHistory(coinmateTransactionHistory, coinmateTransferHistory);
+      allRecords.addAll(records);
+      if (coinmateTransactionHistory.getData().size() < limit) {
+        break;
+      }
+      timestampFrom = coinmateTransactionHistory.getData().get(limit).getTimestamp();
+    }
+    return allRecords;
   }
 
   public static class CoinmateFundingHistoryParams

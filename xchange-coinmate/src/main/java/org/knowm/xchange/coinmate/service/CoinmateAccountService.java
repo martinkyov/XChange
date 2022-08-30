@@ -134,13 +134,8 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
 
     TradeHistoryParamsSorted.Order order = TradeHistoryParamsSorted.Order.asc;
     Integer limit = 1000;
-    int offset = 0;
     Long timestampFrom = null;
     Long timestampTo = null;
-
-    if (params instanceof TradeHistoryParamOffset) {
-      offset = Math.toIntExact(((TradeHistoryParamOffset) params).getOffset());
-    }
 
     if (params instanceof TradeHistoryParamLimit) {
       limit = ((TradeHistoryParamLimit) params).getLimit();
@@ -159,29 +154,10 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
         timestampTo = thpts.getEndTime().getTime();
       }
     }
-    List<FundingRecord> allRecords = new ArrayList<>();
+    CoinmateTransferHistory coinmateTransferHistory =
+            getCoinmateTransferHistory(limit, null, CoinmateAdapters.adaptSortOrder(order), timestampFrom, timestampTo, null);
 
-    while (true) {
-      CoinmateTransferHistory coinmateTransferHistory =
-              getTransfersData(limit, timestampFrom, timestampTo);
-
-      CoinmateTransactionHistory coinmateTransactionHistory =
-              getCoinmateTransactionHistory(
-                      offset,
-                      limit,
-                      CoinmateAdapters.adaptSortOrder(order),
-                      timestampFrom,
-                      timestampTo,
-                      null);
-
-      List<FundingRecord> records = CoinmateAdapters.adaptFundingHistory(coinmateTransactionHistory, coinmateTransferHistory);
-      allRecords.addAll(records);
-      if (coinmateTransactionHistory.getData().size() < limit) {
-        break;
-      }
-      timestampFrom = coinmateTransactionHistory.getData().get(limit - 1).getTimestamp();
-    }
-    return allRecords;
+    return CoinmateAdapters.adaptFundingHistory(coinmateTransferHistory);
   }
 
   public static class CoinmateFundingHistoryParams

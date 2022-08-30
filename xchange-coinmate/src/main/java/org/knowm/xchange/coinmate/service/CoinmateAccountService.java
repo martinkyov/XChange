@@ -199,7 +199,7 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
     CoinmateTransferHistory coinmateTransferHistory =
             getCoinmateTransferHistory(limit, null, CoinmateAdapters.adaptSortOrder(order), timestampFrom, timestampTo, null);
 
-    return CoinmateAdapters.adaptFundingHistory(coinmateTransferHistory);
+    return CoinmateAdapters.adaptTransferHistory(coinmateTransferHistory);
   }
 
   public static class CoinmateFundingHistoryParams

@@ -211,7 +211,91 @@ public class CoinmateAdapters {
     return new UserTrades(trades, Trades.TradeSortType.SortByTimestamp);
   }
 
-  public static List<FundingRecord> adaptFundingHistory(CoinmateTransferHistory transferHistory) {
+  public static List<FundingRecord> adaptFundingHistory(
+          CoinmateTransactionHistory coinmateTradeHistory, CoinmateTransferHistory additionalTransferData) {
+    List<FundingRecord> fundings = new ArrayList<>();
+
+    for (CoinmateTransactionHistoryEntry entry : coinmateTradeHistory.getData()) {
+      FundingRecord.Type type;
+      FundingRecord.Status status;
+
+      switch (entry.getTransactionType()) {
+        case "WITHDRAWAL":
+        case "CREATE_VOUCHER":
+          type = FundingRecord.Type.WITHDRAWAL;
+          break;
+        case "DEPOSIT":
+        case "USED_VOUCHER":
+        case "NEW_USER_REWARD":
+        case "REFERRAL":
+          type = FundingRecord.Type.DEPOSIT;
+          break;
+        default:
+          // here we ignore the other types which are trading
+          continue;
+      }
+
+      switch (entry.getStatus().toUpperCase()) {
+        case "OK":
+        case "COMPLETED":
+          status = FundingRecord.Status.COMPLETE;
+          break;
+        case "NEW":
+        case "SENT":
+        case "CREATED":
+        case "WAITING":
+        case "PENDING":
+          status = FundingRecord.Status.PROCESSING;
+          break;
+        default:
+          status = FundingRecord.Status.FAILED;
+      }
+
+      String transactionId = Long.toString(entry.getTransactionId());
+
+      String description = entry.getDescription();
+
+      String feeCurrency = entry.getFeeCurrency();
+      String externalId = null;
+      if (entry.getTransactionType().equals("DEPOSIT")
+              && description.startsWith(feeCurrency + ": ")) {
+        externalId =
+                description.replace(
+                        feeCurrency + ": ", ""); // the transaction hash is in the description
+      }
+      String address = null;
+      String addressTag = null;
+      if (entry.getTransactionType().equals("WITHDRAWAL") || entry.getTransactionType().equals("DEPOSIT")) {
+        for (CoinmateTransferHistoryEntry transfer : additionalTransferData.getData()) {
+          if (transfer != null && transfer.getId() == entry.getTransactionId()) {
+            address = transfer.getDestination();
+            addressTag = transfer.getDestinationTag();
+          }
+        }
+      }
+
+      FundingRecord funding =
+              new FundingRecord(
+                      address,
+                      addressTag,
+                      new Date(entry.getTimestamp()),
+                      Currency.getInstance(entry.getAmountCurrency()),
+                      entry.getAmount(),
+                      transactionId,
+                      externalId,
+                      type,
+                      status,
+                      null,
+                      entry.getFee(),
+                      description);
+
+      fundings.add(funding);
+    }
+
+    return fundings;
+  }
+
+  public static List<FundingRecord> adaptTransferHistory(CoinmateTransferHistory transferHistory) {
     List<FundingRecord> fundings = new ArrayList<>();
 
     for (CoinmateTransferHistoryEntry entry : transferHistory.getData()) {

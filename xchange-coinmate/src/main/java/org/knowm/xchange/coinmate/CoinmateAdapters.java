@@ -306,11 +306,13 @@ public class CoinmateAdapters {
         case "WITHDRAWAL":
         case "CREATE_VOUCHER":
           type = FundingRecord.Type.WITHDRAWAL;
+          break;
         case "DEPOSIT":
         case "USED_VOUCHER":
         case "NEW_USER_REWARD":
         case "REFERRAL":
           type = FundingRecord.Type.DEPOSIT;
+          break;
         default:
           type = FundingRecord.Type.DEPOSIT;
       }

@@ -187,10 +187,10 @@ public class KrakenAccountService extends KrakenAccountServiceRaw implements Acc
   }
 
   public List<FundingRecord> getStakingHistory() throws IOException {
-      KrakenStaking[] stakings =
-              getKrakenStaking();
-      return KrakenAdapters.adaptStakingHistory(stakings);
-    }
+    KrakenStaking[] stakings =
+            getKrakenStaking();
+    return KrakenAdapters.adaptStakingHistory(stakings);
+  }
 
   public static class KrakenFundingHistoryParams extends DefaultTradeHistoryParamsTimeSpan
       implements TradeHistoryParamOffset, TradeHistoryParamCurrencies, HistoryParamsFundingType {

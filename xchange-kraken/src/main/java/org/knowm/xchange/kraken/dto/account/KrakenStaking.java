@@ -14,6 +14,7 @@ public class KrakenStaking {
     private final KrakenStakingType type;
     private final String asset;
     private final BigDecimal amount;
+    private final BigDecimal fee;
     private final double time;
     private final double bondStart;
     private final double bondEnd;
@@ -24,37 +25,43 @@ public class KrakenStaking {
      *
      * @param method
      * @param aclass
-     * @param refId
-     * @param type
      * @param asset
      * @param amount
+     * @param fee
      * @param unixTime
+     * @param status
+     * @param type
      * @param bondStart
      * @param bondEnd
-     * @param status
      */
     public KrakenStaking(
             @JsonProperty("method") String method,
             @JsonProperty("aclass") String aclass,
-            @JsonProperty("refid") String refId,
-            @JsonProperty("type") String type,
             @JsonProperty("asset") String asset,
+            @JsonProperty("refid") String refId,
             @JsonProperty("amount") String amount,
+            @JsonProperty("fee") String fee,
             @JsonProperty("time") double unixTime,
+            @JsonProperty("status") String status,
+            @JsonProperty("type") String type,
             @JsonProperty("bond_start") double bondStart,
-            @JsonProperty("bond_end") double bondEnd,
-            @JsonProperty("status") String status
+            @JsonProperty("bond_end") double bondEnd
     ) {
         this.method = method;
         this.aclass = aclass;
-        this.refId = refId;
-        this.type = KrakenStakingType.valueOf(type);
         this.asset = asset;
+        this.refId = refId;
         this.amount = new BigDecimal(amount);
+        this.fee = new BigDecimal(fee);
         this.time = unixTime;
+        this.status = KrakenTransactionStatus.valueOf(status);
+        this.type = KrakenStakingType.valueOf(type);
         this.bondStart = bondStart;
         this.bondEnd = bondEnd;
-        this.status = KrakenTransactionStatus.valueOf(status);
+    }
+
+    public BigDecimal getFee() {
+        return fee;
     }
 
     public String getMethod() {
@@ -97,20 +104,6 @@ public class KrakenStaking {
         return status;
     }
 
-//    @Override
-//    public String toString() {
-//        return "KrakenStaking[" +
-//                "refId='" + refId + '\'' +
-//                ", type=" + type +
-//                ", asset='" + asset + '\'' +
-//                ", amount=" + amount +
-//                ", time=" + time +
-//                ", bondStart=" + bondStart +
-//                ", bondEnd=" + bondEnd +
-//                ", status=" + status +
-//                ']';
-//    }
-
     @Override
     public String toString() {
         return "KrakenStaking[" +
@@ -120,6 +113,7 @@ public class KrakenStaking {
                 ", type=" + type +
                 ", asset='" + asset + '\'' +
                 ", amount=" + amount +
+                ", fee=" + fee +
                 ", time=" + time +
                 ", bondStart=" + bondStart +
                 ", bondEnd=" + bondEnd +

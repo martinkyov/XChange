@@ -508,6 +508,40 @@ public class KrakenAdapters {
     return fundingRecords;
   }
 
+  public static List<FundingRecord> adaptStakingHistory(
+      KrakenStaking[] stakings) {
+
+    final List<FundingRecord> fundingRecords = new ArrayList<>();
+    for (KrakenStaking staking : stakings) {
+      if (staking.getType() != null) {
+        final Currency currency = adaptCurrency(staking.getAsset());
+        if (currency != null) {
+          final Date timestamp = new Date((long) (staking.getTime() * 1000L));
+          final FundingRecord.Type type =
+              FundingRecord.Type.OTHER_INFLOW;
+          if (type != null) {
+            final String internalId = staking.getRefId(); // or ledgerEntry.getKey()?
+            FundingRecord fundingRecordEntry =
+                new FundingRecord(
+                    null,
+                    timestamp,
+                    currency,
+                    staking.getAmount(),
+                    internalId,
+                    null,
+                        FundingRecord.Type.OTHER_INFLOW,
+                    FundingRecord.Status.COMPLETE,
+                    null,
+                    null,
+                    staking.getType().getCode());
+            fundingRecords.add(fundingRecordEntry);
+          }
+        }
+      }
+    }
+    return fundingRecords;
+  }
+
   public static OrderStatus adaptOrderStatus(KrakenOrderStatus status) {
     switch (status) {
       case PENDING:

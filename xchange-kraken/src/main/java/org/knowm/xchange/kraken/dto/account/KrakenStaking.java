@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 
 public class KrakenStaking {
 
+
+    private final String method;
+    private final String aclass;
     private final String refId;
     private final KrakenStakingType type;
     private final String asset;
@@ -19,6 +22,8 @@ public class KrakenStaking {
     /**
      * Constructor
      *
+     * @param method
+     * @param aclass
      * @param refId
      * @param type
      * @param asset
@@ -29,6 +34,8 @@ public class KrakenStaking {
      * @param status
      */
     public KrakenStaking(
+            @JsonProperty("method") String method,
+            @JsonProperty("aclass") String aclass,
             @JsonProperty("refid") String refId,
             @JsonProperty("type") String type,
             @JsonProperty("asset") String asset,
@@ -38,6 +45,8 @@ public class KrakenStaking {
             @JsonProperty("bond_end") double bondEnd,
             @JsonProperty("status") String status
     ) {
+        this.method = method;
+        this.aclass = aclass;
         this.refId = refId;
         this.type = KrakenStakingType.valueOf(type);
         this.asset = asset;
@@ -46,6 +55,14 @@ public class KrakenStaking {
         this.bondStart = bondStart;
         this.bondEnd = bondEnd;
         this.status = KrakenTransactionStatus.valueOf(status);
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public String getAclass() {
+        return aclass;
     }
 
     public String getRefId() {
@@ -80,10 +97,26 @@ public class KrakenStaking {
         return status;
     }
 
+//    @Override
+//    public String toString() {
+//        return "KrakenStaking[" +
+//                "refId='" + refId + '\'' +
+//                ", type=" + type +
+//                ", asset='" + asset + '\'' +
+//                ", amount=" + amount +
+//                ", time=" + time +
+//                ", bondStart=" + bondStart +
+//                ", bondEnd=" + bondEnd +
+//                ", status=" + status +
+//                ']';
+//    }
+
     @Override
     public String toString() {
         return "KrakenStaking[" +
-                "refId='" + refId + '\'' +
+                "method='" + method + '\'' +
+                ", aclass='" + aclass + '\'' +
+                ", refId='" + refId + '\'' +
                 ", type=" + type +
                 ", asset='" + asset + '\'' +
                 ", amount=" + amount +
@@ -93,5 +126,4 @@ public class KrakenStaking {
                 ", status=" + status +
                 ']';
     }
-
 }

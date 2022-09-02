@@ -39,10 +39,7 @@ import org.knowm.xchange.dto.trade.OpenOrders;
 import org.knowm.xchange.dto.trade.UserTrade;
 import org.knowm.xchange.dto.trade.UserTrades;
 import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
-import org.knowm.xchange.kraken.dto.account.KrakenDepositAddress;
-import org.knowm.xchange.kraken.dto.account.KrakenLedger;
-import org.knowm.xchange.kraken.dto.account.KrakenTradeVolume;
-import org.knowm.xchange.kraken.dto.account.KrakenVolumeFee;
+import org.knowm.xchange.kraken.dto.account.*;
 import org.knowm.xchange.kraken.dto.marketdata.KrakenAsset;
 import org.knowm.xchange.kraken.dto.marketdata.KrakenAssetPair;
 import org.knowm.xchange.kraken.dto.marketdata.KrakenDepth;
@@ -500,6 +497,40 @@ public class KrakenAdapters {
                     krakenLedger.getBalance(),
                     krakenLedger.getFee(),
                     null);
+            fundingRecords.add(fundingRecordEntry);
+          }
+        }
+      }
+    }
+    return fundingRecords;
+  }
+
+  public static List<FundingRecord> adaptStakingHistory(
+      KrakenStaking[] stakings) {
+
+    final List<FundingRecord> fundingRecords = new ArrayList<>();
+    for (KrakenStaking staking : stakings) {
+      if (staking.getType() != null) {
+        final Currency currency = adaptCurrency(staking.getAsset());
+        if (currency != null) {
+          final Date timestamp = new Date((long) (staking.getTime() * 1000L));
+          final FundingRecord.Type type =
+              FundingRecord.Type.OTHER_INFLOW;
+          if (type != null) {
+            final String internalId = staking.getRefId(); // or ledgerEntry.getKey()?
+            FundingRecord fundingRecordEntry =
+                new FundingRecord(
+                    null,
+                    timestamp,
+                    currency,
+                    staking.getAmount(),
+                    internalId,
+                    null,
+                        FundingRecord.Type.OTHER_INFLOW,
+                    FundingRecord.Status.COMPLETE,
+                    null,
+                    null,
+                    staking.getType().getCode());
             fundingRecords.add(fundingRecordEntry);
           }
         }

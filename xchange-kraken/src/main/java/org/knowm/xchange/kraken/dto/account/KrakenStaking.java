@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 public class KrakenStaking {
 
-
     private final String method;
     private final String aclass;
     private final String refId;
@@ -47,6 +46,7 @@ public class KrakenStaking {
             @JsonProperty("bond_start") double bondStart,
             @JsonProperty("bond_end") double bondEnd
     ) {
+        super();
         this.method = method;
         this.aclass = aclass;
         this.asset = asset;
@@ -106,7 +106,7 @@ public class KrakenStaking {
 
     @Override
     public String toString() {
-        return "KrakenStaking[" +
+        return "KrakenStaking [" +
                 "method='" + method + '\'' +
                 ", aclass='" + aclass + '\'' +
                 ", refId='" + refId + '\'' +

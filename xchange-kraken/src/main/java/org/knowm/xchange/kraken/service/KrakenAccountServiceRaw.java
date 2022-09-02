@@ -235,7 +235,7 @@ public class KrakenAccountServiceRaw extends KrakenBaseService {
                     signatureCreator,
                     exchange.getNonceFactory()
             );
-    return checkResult(result).getStakings();
+    return checkResult(result);
   }
 
 

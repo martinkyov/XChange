@@ -1,7 +1,6 @@
 package org.knowm.xchange.kraken.dto.account;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.knowm.xchange.kraken.dto.account.results.KrakenTransactionStatus;
 
 import java.math.BigDecimal;
 
@@ -10,14 +9,14 @@ public class KrakenStaking {
     private final String method;
     private final String aclass;
     private final String refId;
-    private final KrakenStakingType type;
+    private final String type;
     private final String asset;
     private final BigDecimal amount;
     private final BigDecimal fee;
     private final double time;
     private final double bondStart;
     private final double bondEnd;
-    private final KrakenTransactionStatus status;
+    private final String status;
 
     /**
      * Constructor
@@ -54,8 +53,8 @@ public class KrakenStaking {
         this.amount = new BigDecimal(amount);
         this.fee = new BigDecimal(fee);
         this.time = unixTime;
-        this.status = KrakenTransactionStatus.valueOf(status);
-        this.type = KrakenStakingType.valueOf(type);
+        this.status = status;
+        this.type = type;
         this.bondStart = bondStart;
         this.bondEnd = bondEnd;
     }
@@ -76,7 +75,7 @@ public class KrakenStaking {
         return refId;
     }
 
-    public KrakenStakingType getType() {
+    public String getType() {
         return type;
     }
 
@@ -100,7 +99,7 @@ public class KrakenStaking {
         return bondEnd;
     }
 
-    public KrakenTransactionStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 

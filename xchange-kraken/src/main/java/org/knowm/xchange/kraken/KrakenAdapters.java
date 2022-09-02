@@ -533,7 +533,7 @@ public class KrakenAdapters {
                     FundingRecord.Status.COMPLETE,
                     null,
                     null,
-                    staking.getType().getCode());
+                    staking.getType());
             fundingRecords.add(fundingRecordEntry);
           }
         }

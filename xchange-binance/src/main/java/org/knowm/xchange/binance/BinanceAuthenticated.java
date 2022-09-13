@@ -23,6 +23,7 @@ import org.knowm.xchange.binance.dto.trade.BinanceListenKey;
 import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
 import org.knowm.xchange.binance.dto.trade.BinanceOrder;
 import org.knowm.xchange.binance.dto.trade.BinanceTrade;
+import org.knowm.xchange.binance.dto.trade.BinanceTradesFlow;
 import org.knowm.xchange.binance.dto.trade.OrderSide;
 import org.knowm.xchange.binance.dto.trade.OrderType;
 import org.knowm.xchange.binance.dto.trade.TimeInForce;
@@ -269,6 +270,35 @@ public interface BinanceAuthenticated extends Binance {
       @HeaderParam(X_MBX_APIKEY) String apiKey,
       @QueryParam(SIGNATURE) ParamsDigest signature)
       throws IOException, BinanceException;
+
+  /**
+   * Get Convert Trade History (USER_DATA)
+   *
+   * max 30 days and 1000 txs
+   *
+   * @param startTime
+   * @param endTime
+   * @param limit
+   * @param recvWindow
+   * @param timestamp
+   * @param apiKey
+   * @param signature
+   * @return
+   * @throws IOException
+   * @throws BinanceException
+   */
+  @GET
+  @Path("/sapi/v1/convert/tradeFlow")
+  BinanceTradesFlow getConversion(
+          @QueryParam("startTime") Long startTime, // max interval betwwen srart and end is 30 days
+          @QueryParam("endTime") Long endTime,
+          @QueryParam("limit") Integer limit, // Default 100, Max 1000
+          @QueryParam("recvWindow") Long recvWindow,
+          @QueryParam("timestamp") SynchronizedValueFactory<Long> timestamp,
+          @HeaderParam(X_MBX_APIKEY) String apiKey,
+          @QueryParam(SIGNATURE) ParamsDigest signature)
+          throws IOException, BinanceException;
+
 
   /**
    * Get trades for a specific account and symbol.

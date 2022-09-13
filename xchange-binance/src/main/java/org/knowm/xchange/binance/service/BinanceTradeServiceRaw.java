@@ -16,6 +16,16 @@ import org.knowm.xchange.binance.dto.BinanceException;
 import org.knowm.xchange.binance.dto.account.futures.BinancePosition;
 import org.knowm.xchange.binance.dto.trade.*;
 import org.knowm.xchange.binance.dto.trade.futures.BinanceFutureNewOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceCancelledOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceDustLog;
+import org.knowm.xchange.binance.dto.trade.BinanceListenKey;
+import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceTrade;
+import org.knowm.xchange.binance.dto.trade.BinanceTradesFlow;
+import org.knowm.xchange.binance.dto.trade.OrderSide;
+import org.knowm.xchange.binance.dto.trade.OrderType;
+import org.knowm.xchange.binance.dto.trade.TimeInForce;
 import org.knowm.xchange.client.ResilienceRegistries;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.derivative.FuturesContract;
@@ -268,6 +278,22 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
         .withRetry(retry("allOrders"))
         .withRateLimiter(rateLimiter(REQUEST_WEIGHT_RATE_LIMITER))
         .call();
+  }
+
+  public BinanceTradesFlow getConversions(long startTime, long endTime, int limit) throws IOException {
+    return decorateApiCall(
+            () ->
+            binance.getConversion
+                    (startTime,
+                            endTime,
+                            limit,
+                            getRecvWindow(),
+                            getTimestampFactory(),
+                            apiKey,
+                            signatureCreator))
+            .withRetry(retry("tradeFlow"))
+            .withRateLimiter(rateLimiter(REQUEST_WEIGHT_RATE_LIMITER), myTradesPermits(limit))
+            .call();
   }
 
   public List<BinanceTrade> myTradesAllProducts(Instrument pair, Long orderId, Long startTime, Long endTime, Long fromId, Integer limit) throws BinanceException, IOException{

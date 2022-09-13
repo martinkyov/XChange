@@ -19,6 +19,7 @@ import org.knowm.xchange.binance.dto.trade.BinanceListenKey;
 import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
 import org.knowm.xchange.binance.dto.trade.BinanceOrder;
 import org.knowm.xchange.binance.dto.trade.BinanceTrade;
+import org.knowm.xchange.binance.dto.trade.BinanceTradesFlow;
 import org.knowm.xchange.binance.dto.trade.OrderSide;
 import org.knowm.xchange.binance.dto.trade.OrderType;
 import org.knowm.xchange.binance.dto.trade.TimeInForce;
@@ -195,6 +196,22 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
         .withRetry(retry("allOrders"))
         .withRateLimiter(rateLimiter(REQUEST_WEIGHT_RATE_LIMITER))
         .call();
+  }
+
+  public BinanceTradesFlow getConversions(long startTime, long endTime, int limit) throws IOException {
+    return decorateApiCall(
+            () ->
+            binance.getConversion
+                    (startTime,
+                            endTime,
+                            limit,
+                            getRecvWindow(),
+                            getTimestampFactory(),
+                            apiKey,
+                            signatureCreator))
+            .withRetry(retry("tradeFlow"))
+            .withRateLimiter(rateLimiter(REQUEST_WEIGHT_RATE_LIMITER), myTradesPermits(limit))
+            .call();
   }
 
   public List<BinanceTrade> myTrades(

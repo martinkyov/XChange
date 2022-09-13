@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import org.knowm.xchange.binance.dto.BinanceException;
 import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
 import org.knowm.xchange.binance.dto.trade.BinanceOrder;
 import org.knowm.xchange.binance.dto.trade.BinanceTrade;
+import org.knowm.xchange.binance.dto.trade.BinanceTradesFlow;
 import org.knowm.xchange.binance.dto.trade.OrderType;
 import org.knowm.xchange.binance.dto.trade.TimeInForce;
 import org.knowm.xchange.client.ResilienceRegistries;
@@ -248,6 +250,49 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
   @Override
   public Class[] getRequiredCancelOrderParamClasses() {
     return new Class[] {CancelOrderByIdParams.class, CancelOrderByCurrencyPair.class};
+  }
+
+  private CurrencyPair setCurrencyPair(String from, String to) {
+    return new CurrencyPair(from, to);
+  }
+
+  public UserTrades getConvertHistory(TradeHistoryParams params) throws IOException {
+    Date today = new Date();
+    long endTime = today.getTime();
+    long startTime = endTime - ((1000 * 60 * 60 * 24) * 90);// before 90 days;
+    int limit = 1000;
+
+    if (params instanceof TradeHistoryParamsTimeSpan) {
+
+      startTime = ((TradeHistoryParamsTimeSpan) params).getStartTime().getTime();
+      endTime = ((TradeHistoryParamsTimeSpan) params).getEndTime().getTime();
+
+    }
+    getConversions(startTime, endTime, limit);
+
+    try {
+      BinanceTradesFlow flow = super.getConversions(startTime, endTime, limit);
+      List<UserTrade> allTrades =
+              flow.getConverts().stream()
+                      .map(
+                              convert ->
+                                      new UserTrade.Builder()
+                                              .type(BinanceAdapters.convertType(true))
+                                              .originalAmount(convert.getToAmount())
+                                              .currencyPair(setCurrencyPair(convert.getFromAsset(), convert.getToAsset()))
+                                              .price(convert.getFromAmount())
+                                              .timestamp(new Date(convert.getCreateTime()))
+                                              .id(convert.getOrderId())
+                                              .orderId(convert.getOrderId())
+                                              .feeAmount(convert.getRatio())
+                                              .feeCurrency(Currency.getInstance(convert.getFromAsset()))
+                                              .build())
+                      .collect(Collectors.toList());
+      long lastId = allTrades.stream().map(t -> t.getTimestamp().getTime()).max(Long::compareTo).orElse(0L);
+      return new UserTrades(allTrades, lastId, Trades.TradeSortType.SortByTimestamp);
+    } catch (BinanceException e) {
+      throw BinanceErrorAdapter.adapt(e);
+    }
   }
 
   @Override

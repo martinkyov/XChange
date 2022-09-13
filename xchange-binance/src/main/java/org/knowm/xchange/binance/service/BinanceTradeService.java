@@ -244,9 +244,9 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
 
   public UserTrades getConvertHistory(TradeHistoryParams params) throws IOException {
     Date today = new Date();
-    long i = 1000 * 60 * 60 * 24 * 30 * -1;
+    long i = 1000L * 60 * 60 * 24 * 30 ;
     long endTime = today.getTime() - i;
-    long i1 = (1000 * 60 * 60 * 24) * 29 * -1;
+    long i1 = (1000L * 60 * 60 * 24) * 29;
     long startTime = endTime - i1;// before 30 days;
     int limit = 1000;
 

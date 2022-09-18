@@ -9,14 +9,14 @@ public class BinanceTradesFlow {
     long startTime;
     long endTime;
     int limit;
-    boolean moreData;
+    String moreData;
 
     public BinanceTradesFlow(
             @JsonProperty("list") List<BinanceConvert> converts,
             @JsonProperty("startTime") long startTime,
             @JsonProperty("endTime") long endTime,
             @JsonProperty("limit") int limit,
-            @JsonProperty("moreData") boolean moreData
+            @JsonProperty("moreData") String moreData
     ) {
         this.converts = converts;
         this.startTime = startTime;
@@ -41,7 +41,7 @@ public class BinanceTradesFlow {
         return limit;
     }
 
-    public boolean isMoreData() {
+    public String isMoreData() {
         return moreData;
     }
 }

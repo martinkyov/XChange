@@ -199,19 +199,25 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
   }
 
   public BinanceTradesFlow getConversions(long startTime, long endTime, int limit) throws IOException {
-    return decorateApiCall(
-            () ->
-            binance.getConversion
-                    (startTime,
-                            endTime,
-                            limit,
-                            getRecvWindow(),
-                            getTimestampFactory(),
-                            apiKey,
-                            signatureCreator))
-            .withRetry(retry("tradeFlow"))
-            .withRateLimiter(rateLimiter(REQUEST_WEIGHT_RATE_LIMITER), myTradesPermits(limit))
-            .call();
+    try {
+
+      BinanceTradesFlow tradeFlow = decorateApiCall(
+              () ->
+                      binance.getConversion
+                              (startTime,
+                                      endTime,
+                                      limit,
+                                      getRecvWindow(),
+                                      getTimestampFactory(),
+                                      apiKey,
+                                      signatureCreator))
+              .withRetry(retry("tradeFlow"))
+              .withRateLimiter(rateLimiter(REQUEST_WEIGHT_RATE_LIMITER), myTradesPermits(limit))
+              .call();
+      return tradeFlow;
+    } catch (BinanceException e) {
+      throw new IOException(e.getMessage());
+    }
   }
 
   public List<BinanceTrade> myTrades(

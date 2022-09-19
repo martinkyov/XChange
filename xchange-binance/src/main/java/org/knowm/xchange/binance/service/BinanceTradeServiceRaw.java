@@ -285,7 +285,7 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
 
       BinanceTradesFlow tradeFlow = decorateApiCall(
               () ->
-                      binance.getConversion
+                      binance.tradeFlow
                               (startTime,
                                       endTime,
                                       limit,

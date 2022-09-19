@@ -265,12 +265,12 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
       endTime = ((TradeHistoryParamsTimeSpan) params).getEndTime().getTime();
 
     }
-    List<BinanceConvert> test = getConversions(startTime, endTime, limit);
-    List<BinanceConvert> testTwo = test;
+    BinanceTradesFlow test = getConversions(startTime, endTime, limit);
+    BinanceTradesFlow testTwo = test;
     try {
-      List<BinanceConvert> flow = super.getConversions(startTime, endTime, limit);
+      BinanceTradesFlow flow = super.getConversions(startTime, endTime, limit);
       List<UserTrade> allTrades =
-              flow.stream()
+              flow.getConverts().stream()
                       .map(
                               convert ->
                                       new UserTrade.Builder()

@@ -281,14 +281,14 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
                               convert ->
                                       new UserTrade.Builder()
                                               .type(BinanceAdapters.convertType(true))
-                                              .originalAmount(convert.getToAmount())
+                                              .originalAmount(convert.getFromAmount())
                                               .currencyPair(setCurrencyPair(convert.getFromAsset(), convert.getToAsset()))
-                                              .price(convert.getFromAmount())
+                                              .price(convert.getToAmount())
                                               .timestamp(new Date(convert.getCreateTime()))
                                               .id(String.valueOf(convert.getOrderId()))
                                               .orderId(String.valueOf(convert.getOrderId()))
-                                              .feeAmount(convert.getRatio())
-                                              .feeCurrency(Currency.getInstance(convert.getFromAsset()))
+                                              .feeAmount(null)
+                                              .feeCurrency(null)
                                               .build())
                       .collect(Collectors.toList());
       long lastId = allTrades.stream().map(t -> t.getTimestamp().getTime()).max(Long::compareTo).orElse(0L);

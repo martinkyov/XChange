@@ -26,7 +26,6 @@ import org.knowm.xchange.binance.dto.account.TransferHistory;
 import org.knowm.xchange.binance.dto.account.TransferSubUserHistory;
 import org.knowm.xchange.binance.dto.account.WithdrawResponse;
 import org.knowm.xchange.binance.dto.trade.BinanceCancelledOrder;
-import org.knowm.xchange.binance.dto.trade.BinanceConvert;
 import org.knowm.xchange.binance.dto.trade.BinanceDustLog;
 import org.knowm.xchange.binance.dto.trade.BinanceListenKey;
 import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;

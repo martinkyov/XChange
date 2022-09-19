@@ -1,15 +1,13 @@
 package org.knowm.xchange.binance.dto.trade;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 public class BinanceConvert {
     String quoteId;
     long orderId;
-    String orderStatus;
+    OrderStatus orderStatus;
     String fromAsset;
     BigDecimal fromAmount;
     String toAsset;
@@ -21,7 +19,7 @@ public class BinanceConvert {
     public BinanceConvert(
             @JsonProperty("quoteId") String quoteId,
             @JsonProperty("orderId") Long orderId,
-            @JsonProperty("orderStatus") String orderStatus,
+            @JsonProperty("orderStatus") OrderStatus orderStatus,
             @JsonProperty("fromAsset") String fromAsset,
             @JsonProperty("fromAmount") BigDecimal fromAmount,
             @JsonProperty("toAsset") String toAsset,
@@ -51,7 +49,7 @@ public class BinanceConvert {
         return orderId;
     }
 
-    public String getOrderStatus() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 

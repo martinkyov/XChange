@@ -26,6 +26,7 @@ import org.knowm.xchange.binance.dto.account.TransferHistory;
 import org.knowm.xchange.binance.dto.account.TransferSubUserHistory;
 import org.knowm.xchange.binance.dto.account.WithdrawResponse;
 import org.knowm.xchange.binance.dto.trade.BinanceCancelledOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceConvert;
 import org.knowm.xchange.binance.dto.trade.BinanceDustLog;
 import org.knowm.xchange.binance.dto.trade.BinanceListenKey;
 import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
@@ -297,7 +298,7 @@ public interface BinanceAuthenticated extends Binance {
    */
   @GET
   @Path("/sapi/v1/convert/tradeFlow")
-  BinanceTradesFlow getConversion(
+  List<BinanceConvert> getConversion(
           @QueryParam("startTime") Long startTime, // max interval betwwen srart and end is 30 days
           @QueryParam("endTime") Long endTime,
           @QueryParam("limit") Integer limit, // Default 100, Max 1000

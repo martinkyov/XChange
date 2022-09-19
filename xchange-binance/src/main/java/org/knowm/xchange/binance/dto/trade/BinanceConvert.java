@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 public class BinanceConvert {
     String quoteId;
-    String orderId;
-    OrderStatus orderStatus;
+    long orderId;
+    String orderStatus;
     String fromAsset;
     BigDecimal fromAmount;
     String toAsset;
@@ -18,8 +18,8 @@ public class BinanceConvert {
 
     public BinanceConvert(
             @JsonProperty("quoteId") String quoteId,
-            @JsonProperty("orderId") String orderId,
-            @JsonProperty("orderStatus") OrderStatus orderStatus,
+            @JsonProperty("orderId") long orderId,
+            @JsonProperty("orderStatus") String orderStatus,
             @JsonProperty("fromAsset") String fromAsset,
             @JsonProperty("fromAmount") BigDecimal fromAmount,
             @JsonProperty("toAsset") String toAsset,
@@ -45,11 +45,11 @@ public class BinanceConvert {
         return quoteId;
     }
 
-    public String getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public OrderStatus getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 

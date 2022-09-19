@@ -298,7 +298,7 @@ public interface BinanceAuthenticated extends Binance {
    */
   @GET
   @Path("/sapi/v1/convert/tradeFlow")
-  List<BinanceConvert> getConversion(
+  BinanceTradesFlow getConversion(
           @QueryParam("startTime") Long startTime, // max interval betwwen srart and end is 30 days
           @QueryParam("endTime") Long endTime,
           @QueryParam("limit") Integer limit, // Default 100, Max 1000
@@ -307,8 +307,6 @@ public interface BinanceAuthenticated extends Binance {
           @HeaderParam(X_MBX_APIKEY) String apiKey,
           @QueryParam(SIGNATURE) ParamsDigest signature)
           throws IOException, BinanceException;
-
-
 
   /**
    * Get trades for a specific account and symbol.

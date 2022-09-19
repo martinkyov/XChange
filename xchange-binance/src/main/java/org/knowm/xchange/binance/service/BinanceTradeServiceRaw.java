@@ -199,10 +199,10 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
         .call();
   }
 
-  public  List<BinanceConvert> getConversions(long startTime, long endTime, int limit) throws IOException {
+  public  BinanceTradesFlow getConversions(long startTime, long endTime, int limit) throws IOException {
     try {
 
-      List<BinanceConvert> tradeFlow = decorateApiCall(
+      BinanceTradesFlow tradeFlow = decorateApiCall(
               () ->
                       binance.getConversion
                               (startTime,

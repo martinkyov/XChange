@@ -301,6 +301,7 @@ public interface BinanceAuthenticated extends Binance {
           throws IOException, BinanceException;
 
 
+
   /**
    * Get trades for a specific account and symbol.
    *

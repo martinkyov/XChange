@@ -296,6 +296,7 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
               .withRetry(retry("tradeFlow"))
               .withRateLimiter(rateLimiter(REQUEST_WEIGHT_RATE_LIMITER), myTradesPermits(limit))
               .call();
+
       return tradeFlow;
     } catch (BinanceException e) {
       throw new IOException(e.getMessage());

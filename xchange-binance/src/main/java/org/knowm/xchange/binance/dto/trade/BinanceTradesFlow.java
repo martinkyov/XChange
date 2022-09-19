@@ -5,17 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class BinanceTradesFlow {
-    List<BinanceConvert> converts;
-    long startTime;
-    long endTime;
-    int limit;
+    String converts;
+    String startTime;
+    String endTime;
+    String limit;
     String moreData;
 
     public BinanceTradesFlow(
-            @JsonProperty("list") List<BinanceConvert> converts,
-            @JsonProperty("startTime") long startTime,
-            @JsonProperty("endTime") long endTime,
-            @JsonProperty("limit") int limit,
+            @JsonProperty("list") String converts,
+            @JsonProperty("startTime") String startTime,
+            @JsonProperty("endTime") String endTime,
+            @JsonProperty("limit") String limit,
             @JsonProperty("moreData") String moreData
     ) {
         this.converts = converts;
@@ -25,19 +25,19 @@ public class BinanceTradesFlow {
         this.moreData = moreData;
     }
 
-    public List<BinanceConvert> getConverts() {
+    public String getConverts() {
         return converts;
     }
 
-    public long getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public long getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public int getLimit() {
+    public String getLimit() {
         return limit;
     }
 

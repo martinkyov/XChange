@@ -242,7 +242,7 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
     return new CurrencyPair(from, to);
   }
 
-  public UserTrades getConvertHistory(TradeHistoryParams params) throws IOException {
+  public BinanceTradesFlow getConvertHistory(TradeHistoryParams params) throws IOException {
     Date today = new Date();
     // test
     long i = 1000L * 60 * 60 * 24 * 30 ;
@@ -259,30 +259,31 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
 
     }
     BinanceTradesFlow test = getConversions(startTime, endTime, limit);
-    BinanceTradesFlow testTwo = test;
-    try {
-      BinanceTradesFlow flow = super.getConversions(startTime, endTime, limit);
-      List<UserTrade> allTrades =
-              flow.getConverts().stream()
-                      .map(
-                              convert ->
-                                      new UserTrade.Builder()
-                                              .type(BinanceAdapters.convertType(true))
-                                              .originalAmount(convert.getToAmount())
-                                              .currencyPair(setCurrencyPair(convert.getFromAsset(), convert.getToAsset()))
-                                              .price(convert.getFromAmount())
-                                              .timestamp(new Date(convert.getCreateTime()))
-                                              .id(convert.getOrderId())
-                                              .orderId(convert.getOrderId())
-                                              .feeAmount(convert.getRatio())
-                                              .feeCurrency(Currency.getInstance(convert.getFromAsset()))
-                                              .build())
-                      .collect(Collectors.toList());
-      long lastId = allTrades.stream().map(t -> t.getTimestamp().getTime()).max(Long::compareTo).orElse(0L);
-      return new UserTrades(allTrades, lastId, Trades.TradeSortType.SortByTimestamp);
-    } catch (BinanceException e) {
-      throw BinanceErrorAdapter.adapt(e);
-    }
+    return test;
+//    try {
+//      BinanceTradesFlow flow = super.getConversions(startTime, endTime, limit);
+//      List<UserTrade> allTrades =
+//              flow.getConverts().stream()
+//                      .map(
+//                              convert ->
+//                                      new UserTrade.Builder()
+//                                              .type(BinanceAdapters.convertType(true))
+//                                              .originalAmount(convert.getToAmount())
+//                                              .currencyPair(setCurrencyPair(convert.getFromAsset(), convert.getToAsset()))
+//                                              .price(convert.getFromAmount())
+//                                              .timestamp(new Date(convert.getCreateTime()))
+//                                              .id(convert.getOrderId())
+//                                              .orderId(convert.getOrderId())
+//                                              .feeAmount(convert.getRatio())
+//                                              .feeCurrency(Currency.getInstance(convert.getFromAsset()))
+//                                              .build())
+//                      .collect(Collectors.toList());
+//      long lastId = allTrades.stream().map(t -> t.getTimestamp().getTime()).max(Long::compareTo).orElse(0L);
+//      return new UserTrades(allTrades, lastId, Trades.TradeSortType.SortByTimestamp);
+//    return test;
+//    } catch (BinanceException e) {
+//      throw BinanceErrorAdapter.adapt(e);
+//    }
   }
 
   @Override

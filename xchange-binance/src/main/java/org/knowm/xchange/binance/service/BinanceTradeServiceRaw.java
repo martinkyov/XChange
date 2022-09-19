@@ -17,7 +17,6 @@ import org.knowm.xchange.binance.dto.account.futures.BinancePosition;
 import org.knowm.xchange.binance.dto.trade.*;
 import org.knowm.xchange.binance.dto.trade.futures.BinanceFutureNewOrder;
 import org.knowm.xchange.binance.dto.trade.BinanceCancelledOrder;
-import org.knowm.xchange.binance.dto.trade.BinanceConvert;
 import org.knowm.xchange.binance.dto.trade.BinanceDustLog;
 import org.knowm.xchange.binance.dto.trade.BinanceListenKey;
 import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
@@ -286,7 +285,7 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
 
       BinanceTradesFlow tradeFlow = decorateApiCall(
               () ->
-                      binance.getConversion
+                      binance.getTradeFlow
                               (startTime,
                                       endTime,
                                       limit,

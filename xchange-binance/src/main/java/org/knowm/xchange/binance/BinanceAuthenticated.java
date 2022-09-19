@@ -274,9 +274,7 @@ public interface BinanceAuthenticated extends Binance {
 
   /**
    * Get Convert Trade History (USER_DATA)
-   *
    * max 30 days and 1000 txs
-   *
    * @param startTime
    * @param endTime
    * @param limit
@@ -288,9 +286,10 @@ public interface BinanceAuthenticated extends Binance {
    * @throws IOException
    * @throws BinanceException
    */
+
   @GET
   @Path("/sapi/v1/convert/tradeFlow")
-  BinanceTradesFlow getConversion(
+  BinanceTradesFlow getTradeFlow(
           @QueryParam("startTime") Long startTime, // max interval betwwen srart and end is 30 days
           @QueryParam("endTime") Long endTime,
           @QueryParam("limit") Integer limit, // Default 100, Max 1000

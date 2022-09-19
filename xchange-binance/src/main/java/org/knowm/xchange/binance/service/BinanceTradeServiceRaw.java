@@ -280,9 +280,8 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
         .call();
   }
 
-  public  BinanceTradesFlow getConversions(long startTime, long endTime, int limit) throws IOException {
+  public BinanceTradesFlow getConversions(long startTime, long endTime, int limit) throws IOException {
     try {
-
       BinanceTradesFlow tradeFlow = decorateApiCall(
               () ->
                       binance.getTradeFlow

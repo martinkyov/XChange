@@ -14,6 +14,7 @@ import org.knowm.xchange.binance.BinanceAuthenticated;
 import org.knowm.xchange.binance.BinanceExchange;
 import org.knowm.xchange.binance.dto.BinanceException;
 import org.knowm.xchange.binance.dto.trade.BinanceCancelledOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceConvert;
 import org.knowm.xchange.binance.dto.trade.BinanceDustLog;
 import org.knowm.xchange.binance.dto.trade.BinanceListenKey;
 import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
@@ -198,10 +199,10 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
         .call();
   }
 
-  public BinanceTradesFlow getConversions(long startTime, long endTime, int limit) throws IOException {
+  public  List<BinanceConvert> getConversions(long startTime, long endTime, int limit) throws IOException {
     try {
 
-      BinanceTradesFlow tradeFlow = decorateApiCall(
+      List<BinanceConvert> tradeFlow = decorateApiCall(
               () ->
                       binance.getConversion
                               (startTime,

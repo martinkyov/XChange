@@ -14,6 +14,13 @@ import org.knowm.xchange.binance.BinanceAdapters;
 import org.knowm.xchange.binance.BinanceErrorAdapter;
 import org.knowm.xchange.binance.BinanceExchange;
 import org.knowm.xchange.binance.dto.BinanceException;
+import org.knowm.xchange.binance.dto.trade.BinanceConvert;
+import org.knowm.xchange.binance.dto.trade.BinanceNewOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceOrder;
+import org.knowm.xchange.binance.dto.trade.BinanceTrade;
+import org.knowm.xchange.binance.dto.trade.BinanceTradesFlow;
+import org.knowm.xchange.binance.dto.trade.OrderType;
+import org.knowm.xchange.binance.dto.trade.TimeInForce;
 import org.knowm.xchange.binance.dto.trade.*;
 import org.knowm.xchange.client.ResilienceRegistries;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -258,12 +265,12 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
       endTime = ((TradeHistoryParamsTimeSpan) params).getEndTime().getTime();
 
     }
-    BinanceTradesFlow test = getConversions(startTime, endTime, limit);
-    BinanceTradesFlow testTwo = test;
+    List<BinanceConvert> test = getConversions(startTime, endTime, limit);
+    List<BinanceConvert> testTwo = test;
     try {
-      BinanceTradesFlow flow = super.getConversions(startTime, endTime, limit);
+      List<BinanceConvert> flow = super.getConversions(startTime, endTime, limit);
       List<UserTrade> allTrades =
-              flow.getConverts().stream()
+              flow.stream()
                       .map(
                               convert ->
                                       new UserTrade.Builder()

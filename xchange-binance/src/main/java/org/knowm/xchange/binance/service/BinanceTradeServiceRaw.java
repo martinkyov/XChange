@@ -218,8 +218,7 @@ public class BinanceTradeServiceRaw extends BinanceBaseService {
       return tradeFlow;
 
     } catch (BinanceException e) {
-      String message = e.getMessage();
-      throw new IOException(message);
+      throw new IOException(e.getMessage());
     } catch (IOException e) {
       throw new IOException(e.getMessage());
     } catch (Exception e) {

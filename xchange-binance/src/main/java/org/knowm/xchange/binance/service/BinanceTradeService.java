@@ -251,22 +251,20 @@ public class BinanceTradeService extends BinanceTradeServiceRaw implements Trade
 
   public UserTrades getConvertHistory(TradeHistoryParams params) throws IOException {
     Date today = new Date();
-    // test
-    long i = 1000L * 60 * 60 * 24 * 30 ;
-
-    long endTime = today.getTime() - i;
-    long i1 = (1000L * 60 * 60 * 24) * 29;
-    long startTime = endTime - i1;// before 30 days;
-    int limit = 1000;
+    long endTime = today.getTime();
+    long startTime = endTime - ((1000L * 60 * 60 * 24) * 30);// before 30 days;
 
     if (params instanceof TradeHistoryParamsTimeSpan) {
-
       startTime = ((TradeHistoryParamsTimeSpan) params).getStartTime().getTime();
       endTime = ((TradeHistoryParamsTimeSpan) params).getEndTime().getTime();
-
     }
-    BinanceTradesFlow test = getConversions(startTime, endTime, limit);
-    BinanceTradesFlow testTwo = test;
+
+    int limit = 1000;
+    if (params instanceof TradeHistoryParamLimit) {
+      TradeHistoryParamLimit limitParams = (TradeHistoryParamLimit) params;
+      limit = limitParams.getLimit();
+    }
+
     try {
       BinanceTradesFlow flow = super.getConversions(startTime, endTime, limit);
       List<UserTrade> allTrades =

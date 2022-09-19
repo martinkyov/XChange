@@ -41,10 +41,6 @@ public class BinanceConvert {
 
     }
 
-    public String getQuoteId() {
-        return quoteId;
-    }
-
     public long getOrderId() {
         return orderId;
     }
@@ -71,10 +67,6 @@ public class BinanceConvert {
 
     public BigDecimal getRatio() {
         return ratio;
-    }
-
-    public BigDecimal getInverseRatio() {
-        return inverseRatio;
     }
 
     public long getCreateTime() {

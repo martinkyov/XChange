@@ -69,6 +69,14 @@ public class BinanceConvert {
         return ratio;
     }
 
+    public String getQuoteId() {
+        return quoteId;
+    }
+
+    public BigDecimal getInverseRatio() {
+        return inverseRatio;
+    }
+
     public long getCreateTime() {
         return createTime;
     }

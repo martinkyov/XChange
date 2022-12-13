@@ -98,7 +98,7 @@ public interface GateioAuthenticated extends Gateio {
   GateioTradeHistoryReturn getUserTradeHistory(
       @HeaderParam("KEY") String apiKey,
       @HeaderParam("SIGN") ParamsDigest signer,
-      @FormParam("currencyPair") String currencyPair)
+      @FormParam("currency_pair") String currencyPair)
       throws IOException;
 
   @POST

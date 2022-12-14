@@ -32,6 +32,7 @@ public class GateioBaseService extends BaseExchangeService implements BaseServic
     this.apiKey = exchange.getExchangeSpecification().getApiKey();
     this.signatureCreator =
         GateioHmacPostBodyDigest.createInstance(exchange.getExchangeSpecification().getSecretKey());
+
   }
 
   protected <R extends GateioBaseResponse> R handleResponse(R response) {

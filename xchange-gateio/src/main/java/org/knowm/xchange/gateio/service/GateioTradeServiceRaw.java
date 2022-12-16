@@ -2,6 +2,8 @@ package org.knowm.xchange.gateio.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Instant;
+
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order;
@@ -15,6 +17,9 @@ import org.knowm.xchange.gateio.dto.trade.GateioPlaceOrderReturn;
 import org.knowm.xchange.gateio.dto.trade.GateioTradeHistoryReturn;
 import org.knowm.xchange.service.trade.params.CancelOrderByCurrencyPair;
 import org.knowm.xchange.service.trade.params.CancelOrderByIdParams;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 public class GateioTradeServiceRaw extends GateioBaseService {
 
@@ -131,8 +136,44 @@ public class GateioTradeServiceRaw extends GateioBaseService {
   public GateioTradeHistoryReturn getGateioTradeHistory(CurrencyPair currencyPair)
       throws IOException {
 
+    String method = "GET";
+    String urlEncoded = "/api/v4/futures/orders";
+    String queryString = "contract=BTC_USD&status=finished&limit=50\\n"
+
+    String ts = String.valueOf(System.currentTimeMillis() / 1000);
+    String bodyString = this.bodyToString(request.body());
+    String queryString = (request.url().query() == null) ? "" : request.url().query();
+    String signatureString = String.format("%s\n%s\n%s\n%s\n%s", request.method(), request.url().encodedPath(), queryString,
+            DigestUtils.sha512Hex(bodyString), ts);
+
+    String signature;
+    try {
+      Mac hmacSha512 = Mac.getInstance("HmacSHA512");
+      SecretKeySpec spec = new SecretKeySpec(this.apiSecret.getBytes(), "HmacSHA512");
+      hmacSha512.init(spec);
+      signature = Hex.encodeHexString(hmacSha512.doFinal(signatureString.getBytes()));
+
+
+
+
+//
+//    GateioTradeHistoryReturn gateioTradeHistoryReturn =
+//        bter.getUserTradeHistory(apiKey, signatureCreator, GateioUtils.toPairString(currencyPair));
+//
+
+//    String ts = String.valueOf(Instant.now().getEpochSecond());
+    String apiKey = "";
+    String apiSecret = "";
+    String
+
+
+
     GateioTradeHistoryReturn gateioTradeHistoryReturn =
-        bter.getUserTradeHistory(apiKey, signatureCreator, GateioUtils.toPairString(currencyPair));
+
+
+
+
+        bter.getMyTrades(apiKey, signatureCreator, GateioUtils.toPairString(currencyPair));
 
     return handleResponse(gateioTradeHistoryReturn);
   }

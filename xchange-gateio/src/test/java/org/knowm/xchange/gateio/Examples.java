@@ -11,7 +11,7 @@ public class Examples {
   public static void main(String... args) throws Exception {
 
     Exchange exchange = ExchangeFactory.INSTANCE.createExchange(GateioExchange.class);
-
+    /// dsfdsf
     GateioMarketDataService marketDataService =
         (GateioMarketDataService) exchange.getMarketDataService();
 

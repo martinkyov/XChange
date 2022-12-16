@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,7 +22,7 @@ import org.knowm.xchange.gateio.dto.trade.GateioPlaceOrderReturn;
 import org.knowm.xchange.gateio.dto.trade.GateioTradeHistoryReturn;
 import si.mazi.rescu.ParamsDigest;
 
-@Path("api2/1")
+@Path("/api/v4")
 @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 @Produces(MediaType.APPLICATION_JSON)
 public interface GateioAuthenticated extends Gateio {
@@ -99,6 +100,14 @@ public interface GateioAuthenticated extends Gateio {
       @HeaderParam("KEY") String apiKey,
       @HeaderParam("SIGN") ParamsDigest signer,
       @FormParam("currencyPair") String currencyPair)
+      throws IOException;
+
+  @GET
+  @Path("/spot/my_trades")
+  GateioTradeHistoryReturn getMyTrades(
+      @HeaderParam("KEY") String apiKey,
+      @HeaderParam("SIGN") String signer,
+      @HeaderParam("Timestamp") String ts)
       throws IOException;
 
   @POST

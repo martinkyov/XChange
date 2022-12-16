@@ -24,8 +24,8 @@ public class GateioExchange extends BaseExchange implements Exchange {
   public ExchangeSpecification getDefaultExchangeSpecification() {
 
     ExchangeSpecification exchangeSpecification = new ExchangeSpecification(this.getClass());
-    exchangeSpecification.setSslUri("https://data.gate.io");
-    exchangeSpecification.setHost("gate.io");
+    exchangeSpecification.setSslUri("https://api.gateio.ws");
+    exchangeSpecification.setHost("gateio.ws");
     exchangeSpecification.setExchangeName("Gateio");
 
     return exchangeSpecification;

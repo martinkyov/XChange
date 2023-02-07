@@ -110,6 +110,12 @@ public class KrakenUtils {
     if (discontinuedCurrencies.containsKey(currencyIn)) {
       return Currency.getInstance(discontinuedCurrencies.get(currencyIn));
     }
+
+    // Some transaction are 70 hours selected on HOLD
+    if(currencyIn.contains(".HOLD")) {
+      currencyIn = currencyIn.replace(".HOLD", "");
+    }
+
     Currency currencyOut = assetsMap.get(currencyIn);
     if (currencyOut == null) {
       throw new ExchangeException("Kraken does not support the currency code " + currencyIn);

@@ -113,8 +113,8 @@ public class KrakenUtils {
 
     // Some transaction are 70 hours selected on HOLD
     if(currencyIn.contains(".HOLD")) {
-      if("AED.HOLD".equals(currencyIn)) {
-        currencyIn = "AED";
+      if("AED.HOLD".equals(currencyIn) || "CHF.HOLD".equals(currencyIn)) {
+        currencyIn = currencyIn.replace(".HOLD", "");
       } else {
         currencyIn = "Z" + currencyIn.replace(".HOLD", "");
       }

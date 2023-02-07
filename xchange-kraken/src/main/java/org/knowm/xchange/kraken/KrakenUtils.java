@@ -113,7 +113,7 @@ public class KrakenUtils {
 
     // Some transaction are 70 hours selected on HOLD
     if(currencyIn.contains(".HOLD")) {
-      currencyIn = currencyIn.replace(".HOLD", "");
+      currencyIn = "Z" + currencyIn.replace(".HOLD", "");
     }
 
     Currency currencyOut = assetsMap.get(currencyIn);

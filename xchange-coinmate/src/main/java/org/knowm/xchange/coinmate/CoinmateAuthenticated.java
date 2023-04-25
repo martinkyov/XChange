@@ -295,6 +295,29 @@ public interface CoinmateAuthenticated extends Coinmate {
       @FormParam("address") String address)
       throws IOException;
 
+  // bitcoin cash
+
+  @POST
+  @Path("bitcoinCashWithdrawal")
+  CoinmateTradeResponse bitcoinCashWithdrawal(
+          @FormParam("publicKey") String publicKey,
+          @FormParam("clientId") String clientId,
+          @FormParam("signature") ParamsDigest signer,
+          @FormParam("nonce") SynchronizedValueFactory<Long> nonce,
+          @FormParam("amount") BigDecimal amount,
+          @FormParam("address") String address)
+          throws IOException;
+
+
+  @POST
+  @Path("bitcoinCashDepositAddresses")
+  CoinmateDepositAddresses bitcoinCashDepositAddresses(
+          @FormParam("publicKey") String publicKey,
+          @FormParam("clientId") String clientId,
+          @FormParam("signature") ParamsDigest signer,
+          @FormParam("nonce") SynchronizedValueFactory<Long> nonce)
+          throws IOException;
+
   @POST
   @Path("litecoinDepositAddresses")
   CoinmateDepositAddresses litecoinDepositAddresses(

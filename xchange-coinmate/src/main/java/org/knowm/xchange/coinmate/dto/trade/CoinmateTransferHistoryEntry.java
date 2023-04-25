@@ -52,4 +52,31 @@ public class CoinmateTransferHistoryEntry {
     return destinationTag;
   }
 
+  public BigDecimal getFee() {
+    return fee;
+  }
+
+  public String getTransferType() {
+    return transferType;
+  }
+
+  public long getTimestamp() {
+    return timestamp;
+  }
+
+  public String getTransferStatus() {
+    return transferStatus;
+  }
+
+  public BigDecimal getAmount() {
+    return amount;
+  }
+
+  public String getAmountCurrency() {
+    return amountCurrency;
+  }
+
+  public String getWalletType() {
+    return walletType;
+  }
 }

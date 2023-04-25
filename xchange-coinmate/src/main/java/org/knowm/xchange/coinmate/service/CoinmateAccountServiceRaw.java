@@ -158,6 +158,37 @@ public class CoinmateAccountServiceRaw extends CoinmateBaseService {
     return response;
   }
 
+
+  public CoinmateDepositAddresses coinmateBitcoinCashDepositAddresses() throws IOException {
+    CoinmateDepositAddresses addresses =
+            coinmateAuthenticated.bitcoinCashDepositAddresses(
+                    exchange.getExchangeSpecification().getApiKey(),
+                    exchange.getExchangeSpecification().getUserName(),
+                    signatureCreator,
+                    exchange.getNonceFactory());
+
+    throwExceptionIfError(addresses);
+
+    return addresses;
+  }
+
+  public CoinmateTradeResponse coinmateBitcoinCashWithdrawal(BigDecimal amount, String address)
+          throws IOException {
+    CoinmateTradeResponse response =
+            coinmateAuthenticated.bitcoinCashWithdrawal(
+                    exchange.getExchangeSpecification().getApiKey(),
+                    exchange.getExchangeSpecification().getUserName(),
+                    signatureCreator,
+                    exchange.getNonceFactory(),
+                    amount,
+                    address);
+
+    throwExceptionIfError(response);
+
+    return response;
+  }
+
+
   public CoinmateDepositAddresses coinmateEthereumDepositAddresses() throws IOException {
     CoinmateDepositAddresses addresses =
         coinmateAuthenticated.ethereumDepositAddresses(

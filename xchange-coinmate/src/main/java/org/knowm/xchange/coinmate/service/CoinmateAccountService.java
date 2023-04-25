@@ -88,6 +88,8 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
       response = coinmateBitcoinWithdrawal(amount, address);
     } else if (currency.equals(Currency.LTC)) {
       response = coinmateLitecoinWithdrawal(amount, address);
+    } else if (currency.equals(Currency.BCH)) {
+      response = coinmateBitcoinCashWithdrawal(amount, address);
     } else if (currency.equals(Currency.ETH)) {
       response = coinmateEthereumWithdrawal(amount, address);
     } else if (currency.equals(Currency.XRP)) {
@@ -123,6 +125,8 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
       addresses = coinmateBitcoinDepositAddresses();
     } else if (currency.equals(Currency.LTC)) {
       addresses = coinmateLitecoinDepositAddresses();
+    } else if (currency.equals(Currency.BCH)) {
+      addresses = coinmateBitcoinCashDepositAddresses();
     } else if (currency.equals(Currency.ETH)) {
       addresses = coinmateEthereumDepositAddresses();
     } else if (currency.equals(Currency.XRP)) {
@@ -185,14 +189,43 @@ public class CoinmateAccountService extends CoinmateAccountServiceRaw implements
             getTransfersData(limit, timestampFrom, timestampTo);
 
     CoinmateTransactionHistory coinmateTransactionHistory =
-        getCoinmateTransactionHistory(
-            offset,
-            limit,
-            CoinmateAdapters.adaptSortOrder(order),
-            timestampFrom,
-            timestampTo,
-            null);
+            getCoinmateTransactionHistory(
+                    offset,
+                    limit,
+                    CoinmateAdapters.adaptSortOrder(order),
+                    timestampFrom,
+                    timestampTo,
+                    null);
     return CoinmateAdapters.adaptFundingHistory(coinmateTransactionHistory, coinmateTransferHistory);
+  }
+
+  public List<FundingRecord> getTransfersHistory(TradeHistoryParams params) throws IOException {
+    TradeHistoryParamsSorted.Order order = TradeHistoryParamsSorted.Order.asc;
+    Integer limit = 1000;
+    Long timestampFrom = null;
+    Long timestampTo = null;
+
+    if (params instanceof TradeHistoryParamLimit) {
+      limit = ((TradeHistoryParamLimit) params).getLimit();
+    }
+
+    if (params instanceof TradeHistoryParamsSorted) {
+      order = ((TradeHistoryParamsSorted) params).getOrder();
+    }
+
+    if (params instanceof TradeHistoryParamsTimeSpan) {
+      TradeHistoryParamsTimeSpan thpts = (TradeHistoryParamsTimeSpan) params;
+      if (thpts.getStartTime() != null) {
+        timestampFrom = thpts.getStartTime().getTime();
+      }
+      if (thpts.getEndTime() != null) {
+        timestampTo = thpts.getEndTime().getTime();
+      }
+    }
+    CoinmateTransferHistory coinmateTransferHistory =
+            getCoinmateTransferHistory(limit, null, CoinmateAdapters.adaptSortOrder(order), timestampFrom, timestampTo, null);
+
+    return CoinmateAdapters.adaptTransferHistory(coinmateTransferHistory);
   }
 
   public static class CoinmateFundingHistoryParams

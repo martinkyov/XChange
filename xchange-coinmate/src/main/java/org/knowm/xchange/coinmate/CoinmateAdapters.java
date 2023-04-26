@@ -295,6 +295,65 @@ public class CoinmateAdapters {
     return fundings;
   }
 
+  public static List<FundingRecord> adaptTransferHistory(CoinmateTransferHistory transferHistory) {
+    List<FundingRecord> fundings = new ArrayList<>();
+
+    for (CoinmateTransferHistoryEntry entry : transferHistory.getData()) {
+      FundingRecord.Type type;
+      FundingRecord.Status status;
+
+      switch (entry.getTransferType()) {
+        case "WITHDRAWAL":
+        case "CREATE_VOUCHER":
+          type = FundingRecord.Type.WITHDRAWAL;
+          break;
+        case "DEPOSIT":
+        case "USED_VOUCHER":
+        case "NEW_USER_REWARD":
+        case "REFERRAL":
+          type = FundingRecord.Type.DEPOSIT;
+          break;
+        default:
+          type = FundingRecord.Type.DEPOSIT;
+      }
+
+      switch (entry.getTransferStatus().toUpperCase()) {
+        case "OK":
+        case "COMPLETED":
+          status = FundingRecord.Status.COMPLETE;
+          break;
+        case "NEW":
+        case "SENT":
+        case "CREATED":
+        case "WAITING":
+        case "PENDING":
+          status = FundingRecord.Status.PROCESSING;
+          break;
+        default:
+          status = FundingRecord.Status.FAILED;
+      }
+
+      FundingRecord funding =
+              new FundingRecord(
+                      entry.getDestination(),
+                      entry.getDestinationTag(),
+                      new Date(entry.getTimestamp()),
+                      Currency.getInstance(entry.getAmountCurrency()),
+                      entry.getAmount(),
+                      String.valueOf(entry.getId()),
+                      null,
+                      type,
+                      status,
+                      null,
+                      entry.getFee(),
+                      null);
+
+      fundings.add(funding);
+    }
+
+    return fundings;
+  }
+
   public static List<LimitOrder> adaptOpenOrders(CoinmateOpenOrders coinmateOpenOrders)
       throws CoinmateException {
 

@@ -239,6 +239,9 @@ public interface CoinmateAuthenticated extends Coinmate {
       @FormParam("currencyPair") String currencyPair)
       throws IOException;
 
+
+
+
   @POST
   @Path("buyQuickFix")
   CoinmateTradeResponse buyQuickFix(

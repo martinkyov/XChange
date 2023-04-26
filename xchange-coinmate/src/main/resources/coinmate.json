@@ -2,123 +2,99 @@
   "currency_pairs" : {
     "DASH/BTC" : {
       "price_scale" : 5,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "DASH/CZK" : {
       "price_scale" : 1,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "ETH/DAI" : {
       "price_scale" : 2,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "XRP/EUR" : {
       "price_scale" : 5,
-      "min_amount" : 1,
-      "base_scale" : 8
+      "min_amount" : 1
     },
     "BCH/EUR" : {
       "price_scale" : 2,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "ETH/BTC" : {
       "price_scale" : 5,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "LTC/BTC" : {
       "price_scale" : 6,
-      "min_amount" : 0.01,
-      "base_scale" : 8
+      "min_amount" : 0.01
     },
     "ADA/CZK" : {
       "price_scale" : 4,
-      "min_amount" : 1,
-      "base_scale" : 6
+      "min_amount" : 1
     },
     "ETH/CZK" : {
       "price_scale" : 1,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "SOL/CZK" : {
       "price_scale" : 4,
-      "min_amount" : 0.01,
-      "base_scale" : 8
+      "min_amount" : 0.01
     },
     "BTC/CZK" : {
       "price_scale" : 0,
-      "min_amount" : 0.0001,
-      "base_scale" : 8
+      "min_amount" : 0.0001
     },
     "BCH/CZK" : {
       "price_scale" : 1,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "DASH/EUR" : {
       "price_scale" : 2,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "DAI/EUR" : {
       "price_scale" : 4,
-      "min_amount" : 1,
-      "base_scale" : 2
+      "min_amount" : 1
     },
     "XRP/CZK" : {
       "price_scale" : 4,
-      "min_amount" : 1,
-      "base_scale" : 8
+      "min_amount" : 1
     },
     "BCH/BTC" : {
       "price_scale" : 5,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     },
     "BTC/DAI" : {
       "price_scale" : 2,
-      "min_amount" : 0.0001,
-      "base_scale" : 8
+      "min_amount" : 0.0001
     },
     "LTC/CZK" : {
       "price_scale" : 1,
-      "min_amount" : 0.01,
-      "base_scale" : 8
+      "min_amount" : 0.01
     },
     "XRP/BTC" : {
       "price_scale" : 8,
-      "min_amount" : 1,
-      "base_scale" : 8
+      "min_amount" : 1
     },
     "LTC/EUR" : {
       "price_scale" : 2,
-      "min_amount" : 0.01,
-      "base_scale" : 8
+      "min_amount" : 0.01
     },
     "ADA/EUR" : {
       "price_scale" : 5,
-      "min_amount" : 1,
-      "base_scale" : 6
+      "min_amount" : 1
     },
     "SOL/EUR" : {
       "price_scale" : 5,
-      "min_amount" : 0.01,
-      "base_scale" : 8
+      "min_amount" : 0.01
     },
     "BTC/EUR" : {
       "price_scale" : 1,
-      "min_amount" : 0.0001,
-      "base_scale" : 8
+      "min_amount" : 0.0001
     },
     "ETH/EUR" : {
       "price_scale" : 2,
-      "min_amount" : 0.001,
-      "base_scale" : 8
+      "min_amount" : 0.001
     }
   },
   "currencies" : {

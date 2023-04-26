@@ -80,8 +80,7 @@ public class CoinmateAdapters {
     BigDecimal change = data.getChange();
     Date timestamp = new Date(data.getTimestamp() * 1000L);
 
-    return new Ticker.Builder()
-        .currencyPair(currencyPair)
+    return new Ticker.Builder().instrument(currencyPair)
         .last(last)
         .bid(bid)
         .ask(ask)

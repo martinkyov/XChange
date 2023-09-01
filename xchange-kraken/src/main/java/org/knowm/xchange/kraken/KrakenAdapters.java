@@ -301,7 +301,7 @@ public class KrakenAdapters {
       trades.add(adaptTrade(krakenTradeEntry.getValue(), krakenTradeEntry.getKey()));
     }
 
-    return new UserTrades(trades, TradeSortType.SortByTimestamp);
+    return new UserTrades(trades, null);
   }
 
   public static KrakenUserTrade adaptTrade(KrakenTrade krakenTrade, String tradeId) {

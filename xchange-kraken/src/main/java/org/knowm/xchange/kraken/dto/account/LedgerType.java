@@ -24,6 +24,8 @@ public enum LedgerType {
   ROLLOVER,
   TRANSFER,
   ADJUSTMENT,
+  RECEIVE,
+  SPEND,
   SALE;
 
   private static final Map<String, LedgerType> fromString = new HashMap<>();

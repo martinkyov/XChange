@@ -12,27 +12,27 @@ public class KrakenUserTrade extends UserTrade {
   private final BigDecimal cost;
 
   public KrakenUserTrade(
-      OrderType type,
-      BigDecimal originalAmount,
-      CurrencyPair currencyPair,
-      BigDecimal price,
-      Date timestamp,
-      String id,
-      String orderId,
-      BigDecimal feeAmount,
-      Currency feeCurrency,
-      BigDecimal cost) {
+          OrderType type,
+          BigDecimal originalAmount,
+          CurrencyPair currencyPair,
+          BigDecimal price,
+          Date timestamp,
+          String id,
+          String orderId,
+          BigDecimal feeAmount,
+          Currency feeCurrency,
+          BigDecimal cost) {
     super(
-        type,
-        originalAmount,
-        currencyPair,
-        price,
-        timestamp,
-        id,
-        orderId,
-        feeAmount,
-        feeCurrency,
-        "");
+            type,
+            originalAmount,
+            currencyPair,
+            price,
+            timestamp,
+            id,
+            orderId,
+            feeAmount,
+            feeCurrency,
+            "");
     this.cost = cost;
   }
 

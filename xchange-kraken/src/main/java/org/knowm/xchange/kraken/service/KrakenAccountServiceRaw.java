@@ -238,7 +238,11 @@ public class KrakenAccountServiceRaw extends KrakenBaseService {
     return checkResult(result);
   }
 
-
+  public Map<String, KrakenLedger> getKrakenLedgerInfo(
+          LedgerType ledgerType, Date start, Date end, Long offset, Currency... assets)
+          throws IOException {
+    return getKrakenLedgerInfo(ledgerType, start, end, offset, null, null, assets);
+  }
   /**
    * Retrieves all ledger entries between the start date and the end date. This method iterates over
    * ledger pages until it has retrieved all entries between the start date and the end date. The
@@ -253,7 +257,7 @@ public class KrakenAccountServiceRaw extends KrakenBaseService {
    * @throws IOException
    */
   public Map<String, KrakenLedger> getKrakenLedgerInfo(
-      LedgerType ledgerType, Date start, Date end, Long offset, Currency... assets)
+      LedgerType ledgerType, Date start, Date end, Long offset, String unixTimeStart, String unixTimeEnd, Currency... assets)
       throws IOException {
 
     String startTime = null;
@@ -268,6 +272,12 @@ public class KrakenAccountServiceRaw extends KrakenBaseService {
     }
     if (offset != null) {
       longOffset = offset;
+    }
+    if (unixTimeStart != null) {
+      startTime = unixTimeStart;
+    }
+    if (unixTimeEnd != null) {
+      endTime = unixTimeEnd;
     }
 
     Map<String, KrakenLedger> fullLedgerMap =

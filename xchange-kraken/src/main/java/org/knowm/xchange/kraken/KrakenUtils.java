@@ -97,6 +97,7 @@ public class KrakenUtils {
 //      else if(currencyPairIn.length() == 5){
 //
 //      }
+
     }
     return pair;
   }

@@ -69,6 +69,16 @@ public class KrakenUtils {
   public static CurrencyPair translateKrakenCurrencyPair(String currencyPairIn) {
     CurrencyPair pair = assetPairMap.get(currencyPairIn);
     if (pair == null) {
+      try {
+        if(currencyPairIn.contains("/")) {
+          String[] pairs = currencyPairIn.split("/");
+          Currency base = Currency.getInstance(pairs[0]);
+          Currency quote = Currency.getInstance(pairs[1]);
+          return new CurrencyPair(base, quote);
+        }
+      } catch (Exception ignore) {
+
+      }
       // kraken can give short pairs back from open orders ?
       if (currencyPairIn.length() >= 5 && !currencyPairIn.contains(".")) {
         int firstCurrencyLength = currencyPairIn.length() - 3;
